@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PhysicsTreker — Limited Memory AI</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">PT</div>
+      <div>
+        <div class="title">PhysicsTreker</div>
+        <div class="subtitle">Limited Memory AI (оқушы қателерін есте сақтайды)</div>
+      </div>
+    </div>
+    <div class="right">
+      <span id="who" class="chip hidden"></span>
+      <button id="btnLogout" class="btn ghost hidden">Шығу</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Экран 1: Кіру -->
+    <section id="screenAuth" class="card">
+      <h2>Кіру</h2>
+      <p class="muted">Оқушы немесе мұғалім ретінде кір.</p>
+
+      <div class="tabs">
+        <button class="tab active" data-role="student">Оқушы</button>
+        <button class="tab" data-role="teacher">Мұғалім</button>
+      </div>
+
+      <div class="grid2">
+        <div>
+          <label>Логин (аты-жөні / код)</label>
+          <input id="authLogin" placeholder="мыс: Diana немесе 8A_01"/>
+        </div>
+        <div>
+          <label>Пароль</label>
+          <input id="authPass" type="password" placeholder="••••"/>
+        </div>
+      </div>
+
+      <div class="row">
+        <button id="btnLogin" class="btn primary">Кіру</button>
+        <span id="authHint" class="muted"></span>
+      </div>
+
+      <div class="note">
+        <b>Демо-парольдер:</b>
+        <ul>
+          <li>Оқушы: пароль <code>1234</code></li>
+          <li>Мұғалім: пароль <code>admin</code></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Экран 2: Оқушы панелі -->
+    <section id="screenStudent" class="hidden">
+      <div class="card">
+        <h2>Оқушы панелі</h2>
+        <p class="muted">Алдымен әлсіз тақырыптарыңа көбірек сұрақ беріледі (Limited Memory).</p>
+
+        <div class="grid3">
+          <div class="stat">
+            <div class="statNum" id="stAttempts">0</div>
+            <div class="statTxt">Әрекет саны</div>
+          </div>
+          <div class="stat">
+            <div class="statNum" id="stAccuracy">0%</div>
+            <div class="statTxt">Дұрыстық</div>
+          </div>
+          <div class="stat">
+            <div class="statNum" id="stWeak">—</div>
+            <div class="statTxt">Әлсіз тақырып</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <button id="btnStartQuiz" class="btn primary">Тест бастау</button>
+          <button id="btnStudentHistory" class="btn ghost">Қателерім</button>
+        </div>
+      </div>
+
+      <div id="quizBox" class="card hidden"></div>
+      <div id="studentModal" class="modal hidden"></div>
+    </section>
+
+    <!-- Экран 3: Мұғалім панелі -->
+    <section id="screenTeacher" class="hidden">
+      <div class="card">
+        <h2>Мұғалім панелі</h2>
+        <p class="muted">Сұрақ қосу + аналитика (оқушылардың қателері, әлсіз тақырыптары).</p>
+
+        <div class="grid2">
+          <div class="card inner">
+            <h3>Сұрақ қосу</h3>
+
+            <label>Тақырып</label>
+            <select id="qTopic"></select>
+
+            <label>Сұрақ мәтіні</label>
+            <textarea id="qText" rows="3" placeholder="мыс: Потенциал деген не?"></textarea>
+
+            <label>Жауап нұсқалары</label>
+            <input id="qA" placeholder="A) ..."/>
+            <input id="qB" placeholder="B) ..."/>
+            <input id="qC" placeholder="C) ..."/>
+            <input id="qD" placeholder="D) ..."/>
+
+            <label>Дұрыс жауап (A/B/C/D)</label>
+            <input id="qCorrect" maxlength="1" placeholder="мыс: B"/>
+
+            <label>Түсіндірме (неге бұл дұрыс?)</label>
+            <textarea id="qExplain" rows="3" placeholder="қысқа теориялық түсіндірме..."></textarea>
+
+            <div class="row">
+              <button id="btnAddQuestion" class="btn primary">Қосу</button>
+              <button id="btnResetDemo" class="btn danger ghost">Демоны қалпына келтіру</button>
+            </div>
+            <div id="teacherMsg" class="muted"></div>
+          </div>
+
+          <div class="card inner">
+            <h3>Аналитика</h3>
+            <div class="row">
+              <button id="btnRefreshAnalytics" class="btn ghost">Жаңарту</button>
+              <button id="btnExportJSON" class="btn ghost">Export JSON</button>
+            </div>
+
+            <div id="analyticsBox" class="analytics"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <span>© PhysicsTreker • Limited Memory AI прототип</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
