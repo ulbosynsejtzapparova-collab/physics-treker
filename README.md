@@ -1,1 +1,1 @@
-# physics-treker
+# FizQateLab
